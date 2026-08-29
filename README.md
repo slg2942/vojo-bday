@@ -1,2 +1,2 @@
 # vojo-bday
-gift 4 ma fd
+gift for my friend 
