@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Vojo!</title>
+    <style>
+        :root {
+            --bg-color: #F5EBE0;
+            --text-main: #5C4033;
+            --card-bg: #E3D5CA;
+            --accent: #D5BDAF;
+            --btn-color: #8B5A2B;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('1000109321.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: rgba(245, 235, 224, 0.78); 
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .card-container {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(92, 64, 51, 0.25);
+            max-width: 380px;
+            cursor: pointer;
+            border: 2px solid var(--accent);
+        }
+
+        .emoji-badge {
+            font-size: 55px;
+            margin: 15px 0;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 18px;
+            border-radius: 50%;
+            display: inline-block;
+            border: 2px dashed var(--text-main);
+        }
+
+        .gift-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .gift-box {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .gift-box:hover { transform: scale(1.08); }
+        .gift-box.opened { opacity: 0.45; pointer-events: none; }
+
+        button {
+            background-color: var(--btn-color);
+            color: #F5EBE0;
+            border: none;
+            padding: 12px 24px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+
+        #prank-area {
+            position: relative;
+            width: 100%;
+            max-width: 350px;
+            height: 250px;
+            margin-top: 20px;
+        }
+
+        #noBtn {
+            transition: all 0.15s ease;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid var(--text-main);
+            z-index: 20;
+            max-width: 320px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body onclick="playClickSound()">
+
+    <!-- Online Audio -->
+    <audio id="bgMusic" loop src="https://actions.google.com/sounds/v1/water/gentle_stream_waterfall.ogg"></audio>
+    <audio id="clickSound" src="https://actions.google.com/sounds/v1/household/light_switch_flick_short.ogg"></audio>
+
+    <!-- Screen 1: Loading -->
+    <div id="screen-1" class="screen active">
+        <h2 id="loading-text">Loading birthday vibes... 🤎</h2>
+        <h2 id="enter-text" style="display: none; cursor: pointer;" onclick="nextScreen(2)">Click to enter ✨</h2>
+    </div>
+
+    <!-- Screen 2: Invitation Prompt -->
+    <div id="screen-2" class="screen" onclick="nextScreen(3)">
+        <h2>✉️ Special delivery for you</h2>
+        <p>(Tap anywhere to unlock)</p>
+    </div>
+
+    <!-- Screen 3: The Card -->
+    <div id="screen-3" class="screen">
+        <div class="card-container" onclick="nextScreen(4)">
+            <h1>HAPPY BIRTHDAY! 🎂🎉</h1>
+            <div class="emoji-badge">🐻🤎</div>
+            <h2>Anirban Halder</h2>
+            <h3>31/08/2009</h3>
+            <p>Wishing you an incredible year ahead packed with success, happiness, and unforgettable moments.</p>
+            <p style="font-size: 13px; margin-top: 20px; opacity: 0.8;">(Click anywhere on the card)</p>
+        </div>
+    </div>
+
+    <!-- Screen 4: Cake -->
+    <div id="screen-4" class="screen" onclick="nextScreen(5)">
+        <h1>Happy Birthday Vojo! 🎈</h1>
+        <img src="1000109319.jpg" alt="Birthday Cake" style="width: 230px; border-radius: 12px; border: 3px solid var(--text-main); margin: 15px 0;">
+        <h2>Level 17 Unlocked! 🕯️✨</h2>
+        <p>(Tap to continue)</p>
+    </div>
+
+    <!-- Screen 5: Gifts -->
+    <div id="screen-5" class="screen">
+        <h2>Pick your gifts, Vojo! 🎁</h2>
+        <div class="gift-container">
+            <div id="box-1" class="gift-box" onclick="openBox(1)">
+                <img src="1000109320.jpg" alt="Gift 1" style="width: 90px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+            </div>
+            <div id="box-2" class="gift-box" onclick="openBox(2)">
+                <img src="1000109320.jpg" alt="Gift 2" style="width: 90px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+            </div>
+            <div id="box-3" class="gift-box" onclick="openBox(3)">
+                <img src="1000109320.jpg" alt="Gift 3" style="width: 90px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+            </div>
+        </div>
+        <button id="secret-btn" style="display:none; margin-top:30px;" onclick="nextScreen(6)">Open Secret Gift 🤫</button>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-1" class="modal" onclick="closeModal(1)">
+        <h3>The Harsh Truth 🕶️</h3>
+        <p>Bro really thought he was getting wiser this year... nah, just older! 🦧🤎</p>
+        <p style="font-size: 36px; margin: 10px 0;">🤡📈</p>
+        <p style="font-size: 12px;">(Click to close)</p>
+    </div>
+    <div id="modal-2" class="modal" onclick="closeModal(2)">
+        <h3>Memory Reel 🎞️</h3>
+        <p>No photos attached—just imagine a chaotic highlight reel of all our random moments playing in 4K right now. 🎬✨</p>
+        <p style="font-size: 12px;">(Click to close)</p>
+    </div>
+    <div id="modal-3" class="modal" onclick="closeModal(3)">
+        <h3>Wishes for Vojo 🌟</h3>
+        <p>Wishing you endless milestones, zero stress, and top-tier energy every single day bro!</p>
+        <p style="font-size: 12px;">(Click to close)</p>
+    </div>
+
+    <!-- Screen 6: Prank -->
+    <div id="screen-6" class="screen">
+        <h2>Are You Giving Your Birthday Treat, Vojo? 🍕</h2>
+        <div id="prank-area">
+            <button id="yesBtn" onclick="nextScreen(7)">Yes</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+    <!-- Screen 7: Treat Accepted -->
+    <div id="screen-7" class="screen" onclick="nextScreen(8)">
+        <h1>Thank you for the party! 🥳🍔</h1>
+        <p>I knew you wouldn't let me down.</p>
+        <p>(Tap to finish)</p>
+    </div>
+
+    <!-- Screen 8: The End -->
+    <div id="screen-8" class="screen">
+        <h1>Thank you, Vojo</h1>
+        <h2>THE END. 🤎✨</h2>
+    </div>
+
+    <script>
+        function playClickSound() {
+            const sound = document.getElementById('clickSound');
+            sound.currentTime = 0;
+            sound.play().catch(()=>{});
+        }
+        
+        function startMusic() {
+            const music = document.getElementById('bgMusic');
+            if (music.paused) {
+                music.volume = 0.4;
+                music.play().catch(()=>{});
+            }
+        }
+
+        function nextScreen(num) {
+            startMusic();
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-' + num).classList.add('active');
+        }
+
+        setTimeout(() => {
+            document.getElementById('loading-text').style.display = 'none';
+            document.getElementById('enter-text').style.display = 'block';
+        }, 2200);
+
+        let boxesOpened = 0;
+        function openBox(id) {
+            document.getElementById('modal-' + id).style.display = 'block';
+            let box = document.getElementById('box-' + id);
+            if (!box.classList.contains('opened')) {
+                box.classList.add('opened');
+                boxesOpened++;
+            }
+            if (boxesOpened === 3) {
+                document.getElementById('secret-btn').style.display = 'block';
+            }
+        }
+
+        function closeModal(id) {
+            document.getElementById('modal-' + id).style.display = 'none';
+        }
+
+        const noBtn = document.getElementById('noBtn');
+        const prankArea = document.getElementById('prank-area');
+
+        function moveNoButton() {
+            const newX = Math.floor(Math.random() * (prankArea.offsetWidth - noBtn.offsetWidth));
+            const newY = Math.floor(Math.random() * (prankArea.offsetHeight - noBtn.offsetHeight));
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${newX}px`;
+            noBtn.style.top = `${newY}px`;
+        }
+
+        noBtn.addEventListener('mouseover', moveNoButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+        noBtn.addEventListener('click', () => {
+            alert("Are you trying to hurt me? 🥺\n\nTry again!");
+        });
+    </script>
+</body>
+</html>
+
